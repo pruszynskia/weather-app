@@ -14,17 +14,14 @@ const Weather = ({icon, main, temp_min, temp_max, dt}: any) => {
     const styles = weatherStyles(); 
 
     const [city, setCity] = useState('')
-    // Weather.tsx:70 Uncaught TypeError: Cannot read property 'main' of null
     const [weatherData, setWeatherData] = useState<any | null>(null);
     const [loading, setLoading] = useState(false);
-
-    const date = new Date(dt)
 
     const getWeatherData = async (city: any) => {
         const url = `${ API_BASE_URL}/data/2.5/forecast?q=${city}&cnt=5&appid=${API_KEY}&units=metric&mode=json`
         const data = await axios.get(url)
         
-         console.log(data)
+        //  console.log(data)
         return data
     }
 
@@ -40,9 +37,14 @@ const Weather = ({icon, main, temp_min, temp_max, dt}: any) => {
         }
     }
 
-    useEffect(() => {
-        getData();
-    }, []);
+    // useEffect(() => {
+    //     getData();
+    // }, []);
+
+    const getDate = (dt: any) => {
+        var d = new Date(dt)
+        return d.toString()
+    }
 
     return (
         <div className={styles.root}>
@@ -55,27 +57,28 @@ const Weather = ({icon, main, temp_min, temp_max, dt}: any) => {
                 />
                 <Button
                     variant="contained"
-                    onClick={() => getData()}
+                    onClick={getData}
                 >
                     Search
                 </Button>
             </div>
-            <Card>
-                {/* <CardMedia 
-                    image={`http://openweathermap.org/img/wn/${icon}@2x.png`}
-                /> */}
-                {
-                weatherData ? 
-                <CardContent>
-                <h2>{main}</h2>
-                <p>{date.toLocaleDateString()} - {date.toLocaleTimeString()}</p>
-                <p>Cloudy</p>
-                <p>Min: {weatherData.temp_min}</p>
-                <p>Max: {weatherData.temp_max}</p>
-                </CardContent>
-                : ""
-                }
-            </Card>
+            {
+            weatherData ? (
+                <Card key={dt}>
+                    {/* <CardMedia 
+                        image={`http://openweathermap.org/img/wn/${icon}@2x.png`}
+                    /> */}
+                    {console.log(weatherData)}
+                    <CardContent>
+                        <h2>{weatherData.data.list[0].weather[0].main}</h2>
+                        <p>{getDate(weatherData.data.list[0].dt)}</p>
+                        <p>Cloudy</p>
+                        <p>Min: {weatherData.data.list[0].main.temp_min}</p>
+                        <p>Max: {weatherData.data.list[0].main.temp_max}</p>
+                    </CardContent>
+                </Card>
+            ) : null
+            }
         </div>
     )
 };

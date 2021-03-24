@@ -7,6 +7,9 @@ export const weatherStyles = makeStyles(() => ({
         justifyContent: "center"
     },
     container: {
-        flexDirection: "row"        
+        flexDirection: "row",
+        width: "100%",
+        height: "100%",
+        marginTop: "20px"
     }
 }));
