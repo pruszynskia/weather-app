@@ -10,15 +10,15 @@ import {
 } from '@material-ui/core';
 import { API_KEY , API_BASE_URL } from '../apis/apisConfig';
 
-const Weather = ({icon, main, temp_min, temp_max, dt}: any) => {
-    const styles = weatherStyles(); 
+const Weather = () => {
+    const styles = weatherStyles();
 
     const [city, setCity] = useState('')
     const [weatherData, setWeatherData] = useState<any | null>(null);
     const [loading, setLoading] = useState(false);
 
     const getWeatherData = async (city: any) => {
-        const url = `${ API_BASE_URL}/data/2.5/forecast?q=${city}&cnt=5&appid=${API_KEY}&units=metric&mode=json`
+        const url = `${ API_BASE_URL}/data/2.5/forecast?q=${city}&cnt=16&appid=${API_KEY}&units=metric&mode=json`
         const data = await axios.get(url)
         
         //  console.log(data)
@@ -37,18 +37,18 @@ const Weather = ({icon, main, temp_min, temp_max, dt}: any) => {
         }
     }
 
-    // useEffect(() => {
-    //     getData();
-    // }, []);
-
     const getDate = (dt: any) => {
-        var d = new Date(dt)
-        return d.toString()
+        let d = new Date(dt * 1000)
+        return d.toLocaleDateString()
     }
 
     return (
         <div className={styles.root}>
-            <div className={styles.container}>
+            <div className={`
+                ${styles.container}
+                ${styles.row}
+                `}
+            >
                 <TextField
                     label="Search"
                     variant="outlined"
@@ -62,23 +62,46 @@ const Weather = ({icon, main, temp_min, temp_max, dt}: any) => {
                     Search
                 </Button>
             </div>
+            <div className={`
+                ${styles.container}
+                ${styles.row}
+                `}
+            >
             {
             weatherData ? (
-                <Card key={dt}>
-                    {/* <CardMedia 
-                        image={`http://openweathermap.org/img/wn/${icon}@2x.png`}
-                    /> */}
+                weatherData.data.list.map((pos: any) =>
+                <div className={`
+                    ${styles.container__card}
+                    ${styles.row}
+                    `}
+                >
+                <Card>
+                    <CardMedia
+                        className={`
+                        ${styles.container__card}
+                        ${styles.cardImg}
+                        `}
+                        component="img"
+                        src={`http://openweathermap.org/img/wn/${pos.weather[0].icon}@2x.png`}
+                    />
+                    <CardContent 
+                        className={`
+                        ${styles.container__card}
+                        ${styles.column}
+                        `}
+                    >
                     {console.log(weatherData)}
-                    <CardContent>
-                        <h2>{weatherData.data.list[0].weather[0].main}</h2>
-                        <p>{getDate(weatherData.data.list[0].dt)}</p>
-                        <p>Cloudy</p>
-                        <p>Min: {weatherData.data.list[0].main.temp_min}</p>
-                        <p>Max: {weatherData.data.list[0].main.temp_max}</p>
+                        <h2>{pos.weather[0].main}</h2>
+                        <p>{getDate(pos.dt)}</p>
+                        <p>Min: {pos.main.temp_min} *C</p>
+                        <p>Max: {pos.main.temp_max} *C</p>
                     </CardContent>
                 </Card>
+                </div>
+                )
             ) : null
             }
+            </div>
         </div>
     )
 };

@@ -4,12 +4,32 @@ export const weatherStyles = makeStyles(() => ({
     root: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     container: {
-        flexDirection: "row",
-        width: "100%",
-        height: "100%",
-        marginTop: "20px"
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        marginTop: "20px",
+    },
+    container__card: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        marginLeft: "20px",
+        marginTop: "20px",
+        maxWidth: "300px"
+    },
+    column: {
+        flexDirection: "column"
+    },
+    row: {
+        flexDirection: "row"
+    },
+    cardImg: {
+        height: "200px",
+        width: "200px"
     }
+    
+    
 }));
