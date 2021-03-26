@@ -18,10 +18,10 @@ const Weather = () => {
     const [loading, setLoading] = useState(false);
 
     const getWeatherData = async (city: any) => {
-        const url = `${ API_BASE_URL}/data/2.5/forecast?q=${city}&cnt=16&appid=${API_KEY}&units=metric&mode=json`
+        const url = `${ API_BASE_URL}/data/2.5/forecast?q=${city}&cnt=40&appid=${API_KEY}&units=metric&mode=json`
         const data = await axios.get(url)
         
-        //  console.log(data)
+         console.log(data)
         return data
     }
 
@@ -36,10 +36,44 @@ const Weather = () => {
             setLoading(false)
         }
     }
+    
+    // const getWeatherDate = ({dt, month, date, day}: any) => {
+        // const months = [
+        //     "January",
+        //     "February",
+        //     "March",
+        //     "April",
+        //     "May",
+        //     "June",
+        //     "July",
+        //     "August",
+        //     "September",
+        //     "October",
+        //     "November",
+        //     "December"
+        // ];
+    
+        const days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
 
-    const getDate = (dt: any) => {
-        let d = new Date(dt * 1000)
-        return d.toLocaleDateString()
+    //     let myDate = new Date(dt);
+    //     month = myDate.getMonth();
+    //     date = myDate.getDate()
+    //     day = myDate.getDay();
+    //     console.log(month);
+    //     return `${day}`
+    // };
+
+    const getWeatherDate = (dt: any) => {
+        let date = new Date(dt)
+        return date.toLocaleDateString()
     }
 
     return (
@@ -67,6 +101,7 @@ const Weather = () => {
                 ${styles.row}
                 `}
             >
+            {console.log(weatherData)}
             {
             weatherData ? (
                 weatherData.data.list.map((pos: any) =>
@@ -90,9 +125,9 @@ const Weather = () => {
                         ${styles.column}
                         `}
                     >
-                    {console.log(weatherData)}
                         <h2>{pos.weather[0].main}</h2>
-                        <p>{getDate(pos.dt)}</p>
+                        {/* <p>{getWeatherDate(pos.dt)}</p> */}
+                        <p>{days[new Date(pos.dt).getDay()]}</p>
                         <p>Min: {pos.main.temp_min} *C</p>
                         <p>Max: {pos.main.temp_max} *C</p>
                     </CardContent>
