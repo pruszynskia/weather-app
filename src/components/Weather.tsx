@@ -148,7 +148,7 @@ const Weather = () => {
                 <div>Tuesday</div>
                 {
                     newWeatherData.monday.length ? (<>
-                    {/* <p>{console.log(newWeatherData.monday)} </p> */}
+                    <p>{console.log(newWeatherData.monday)} </p>
                     {
                         <div>{newWeatherData.monday.filter((h: any) => new Date(h.dt).getHours() === 18)[0].dt}</div>
                     }
@@ -157,48 +157,10 @@ const Weather = () => {
                 ) : null
                 }        
                 </Card>
-
-                {weatherData.data.list.map((pos: any, id:any) =>
-                <div key={id} className={`
-                    ${styles.container__card}
-                    ${styles.row}
-                `}
-                >
-                <Card>
-                    <CardMedia
-                        className={`
-                        ${styles.container__card}
-                        ${styles.cardImg}
-                        `}
-                        component="img"
-                        src={`http://openweathermap.org/img/wn/${pos.weather[0].icon}@2x.png`}
-                    />
-                    <CardContent 
-                        className={`
-                        ${styles.container__card}
-                        ${styles.column}
-                        `}
-                    >
-                        <h2>{pos.weather[0].main}</h2>
-                        <p>{days[new Date(pos.dt*1000).getDay()]}</p>
-                        <p>
-                            {new Date(pos.dt*1000).getFullYear()}{' '}
-                            {months[new Date(pos.dt*1000).getMonth()]}{' '}
-                            {new Date(pos.dt*1000).getDay()}{' '}
-                            {new Date(pos.dt*1000).getHours()}{':00'}
-                            
-                        </p>
-                        <p>Min: {pos.main.temp_min} &deg;C</p>
-                        <p>Max: {pos.main.temp_max} &deg;C</p>
-                    </CardContent>
-                </Card>
-                </div>
-                )
-            ) : null
-            }
-            Forecast
-            {
-            weatherData ? (
+                
+                
+             Forecast
+            {weatherData ? (
                 weatherData.data.list.map((pos: any, id:any) =>
                 <div key={id} className={`
                     ${styles.container__card}
@@ -234,9 +196,10 @@ const Weather = () => {
                     </CardContent>
                 </Card>
                 </div>
-                )
-                ) : null
-            }     
+                
+                )) : null
+            }   
+            
             </div>
         </div>
     )
