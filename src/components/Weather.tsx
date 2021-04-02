@@ -107,6 +107,7 @@ const Weather = () => {
     }
     return (
         <div className={styles.root}>
+            {/* Search bar */} 
             <form className={`
                 ${styles.container}
                 ${styles.row}
@@ -120,86 +121,110 @@ const Weather = () => {
                     value={city}
                 />
                 <Button
-                type="submit"
+                    type="submit"
                     variant="contained"
                 >
                     Search
                 </Button>
-                </form>
+            </form>
+
+            {/* Daily forecast */} 
             <div className={`
+                ${styles.container}
+                ${styles.column}
+                `}
+            >
+                <div className={`
                 ${styles.container}
                 ${styles.row}
                 `}
-            >
-                <Card>
-                <div>Monday</div>
-                {
-                    newWeatherData.monday.length ? (<>
-                    {console.log(newWeatherData.monday)}
-                    {
-                        <div>{newWeatherData.monday.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
-                    }
-                    </>
-                    
-                ) : null
-                }
-                </Card>
-                <Card>
-                <div>Tuesday</div>
-                {
-                    newWeatherData.monday.length ? (<>
-                    <p>{console.log(newWeatherData.monday)} </p>
-                    {
-                        <div>{newWeatherData.monday.filter((h: any) => new Date(h.dt).getHours() === 18)[0].dt}</div>
-                    }
-                    </>
-                    
-                ) : null
-                }        
-                </Card>
-                
-                
-             Forecast
-            {weatherData ? (
-                weatherData.data.list.map((pos: any, id:any) =>
-                <div key={id} className={`
-                    ${styles.container__card}
-                    ${styles.row}
-                    `}
                 >
-                <Card>
-                    <CardMedia
-                        className={`
-                        ${styles.container__card}
-                        ${styles.cardImg}
-                        `}
-                        component="img"
-                        src={`http://openweathermap.org/img/wn/${pos.weather[0].icon}@2x.png`}
-                    />
-                    <CardContent 
-                        className={`
-                        ${styles.container__card}
-                        ${styles.column}
-                        `}
-                    >
-                        <h2>{pos.weather[0].main}</h2>
-                        <p>{days[new Date(pos.dt*1000).getDay()]}</p>
-                        <p>
-                            {new Date(pos.dt*1000).getFullYear()}{' '}
-                            {months[new Date(pos.dt*1000).getMonth()]}{' '}
-                            {new Date(pos.dt*1000).getDay()}{' '}
-                            {new Date(pos.dt*1000).getHours()}{':00'}
-                            
-                        </p>
-                        <p>Min: {pos.main.temp_min} *C</p>
-                        <p>Max: {pos.main.temp_max} *C</p>
-                    </CardContent>
-                </Card>
+                    <Card>
+                        <CardContent 
+                            className={`
+                            ${styles.container__card}
+                            ${styles.column}
+                            `}
+                        >
+                            <h2>Monday</h2>
+                            {
+                            newWeatherData.monday.length ? (
+                            <>
+                                {console.log(newWeatherData.monday)}
+                                {
+                                    <div>{newWeatherData.monday.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
+                                }
+                            </>
+                            ) : null
+                            }
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent
+                            className={`
+                            ${styles.container__card}
+                            ${styles.column}
+                            `}
+                        >
+                            <h2>Tuesday</h2>
+                            {
+                            newWeatherData.monday.length ? (
+                            <>
+                                <p>{console.log(newWeatherData.monday)} </p>
+                                {
+                                    <div>{newWeatherData.monday.filter((h: any) => new Date(h.dt).getHours() === 18)[0].dt}</div>
+                                }
+                            </>
+                            ) : null
+                            }   
+                        </CardContent>
+                    </Card>
                 </div>
-                
-                )) : null
-            }   
-            
+
+                {/* 3 Hour forecast */}
+                <div className={`
+                ${styles.container}
+                ${styles.row}
+                `}
+                > 
+                    {weatherData ? (
+                        weatherData.data.list.map((pos: any, id:any) =>
+                        <div key={id} className={`
+                            ${styles.container__card}
+                            ${styles.row}
+                            `}
+                        >
+                            <Card>
+                                <CardMedia
+                                    className={`
+                                    ${styles.container__card}
+                                    ${styles.cardImg}
+                                    `}
+                                    component="img"
+                                    src={`http://openweathermap.org/img/wn/${pos.weather[0].icon}@2x.png`}
+                                />
+                                <CardContent 
+                                    className={`
+                                    ${styles.container__card}
+                                    ${styles.column}
+                                    `}
+                                >
+                                    <h2>{pos.weather[0].main}</h2>
+                                    <p>{days[new Date(pos.dt*1000).getDay()]}</p>
+                                    <p>
+                                        {new Date(pos.dt*1000).getFullYear()}{' '}
+                                        {months[new Date(pos.dt*1000).getMonth()]}{' '}
+                                        {new Date(pos.dt*1000).getDay()}{' '}
+                                        {new Date(pos.dt*1000).getHours()}{':00'}
+                                    </p>
+                                    <p>Min: {Math.round(pos.main.temp_min)} &deg;C</p>
+                                    <p>Max: {Math.round(pos.main.temp_max)} &deg;C</p>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    )) : null
+                    }   
+                </div>
             </div>
         </div>
     )

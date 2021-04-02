@@ -10,14 +10,13 @@ export const weatherStyles = makeStyles(() => ({
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
-        marginTop: "20px",
+        margin: "20px",
     },
     container__card: {
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
-        marginLeft: "20px",
-        marginTop: "20px",
+        margin: "20px",
         maxWidth: "300px"
     },
     column: {
