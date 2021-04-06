@@ -94,17 +94,42 @@ const Weather = () => {
         }
         return newDates
     }
-
-    function getMaxTemp(arr: any) {
-        let maxTemp = 0
-        return maxTemp
-    }
+    // Max Temp
+    function getMaxTemp(obj: any, day: string) {
+        console.log(obj[day].length)
+        if(obj[day].length) {
+            return Math.floor(Math.max(...obj[day].map((el: any) => el.main.temp_max)))
+        } else {
+            return 'not available'
+        }    }
+    // console.log("getMaxTemp", getMaxTemp([1,2,3]))
+    console.log("newWeatherData max temp", getMaxTemp(newWeatherData, 'monday'))
+    
     if (weatherData && loading2) {
         // console.log(getByDay(weatherData.data.list), "GET BY DAY")
         let nWD = getByDay(weatherData.data.list)
         setNewWeatherData(nWD)
         setLoading2(false)
     }
+
+    function getIcon(obj: any, day: string) {
+        if (obj[day].length) {
+            if(obj[day].length >= 4) {
+                const icon = obj[day].filter((el: any) => {
+                    const hour = new Date(el.dt * 1000).getHours()
+                    console.log(hour)
+                    return hour === 11
+                })[0].weather[0].icon
+                return icon 
+            } else {
+                return obj[day][0].weather[0].icon
+            }
+        } else {
+            return "not available"
+        }
+    }
+    console.log("getIcon",getIcon(newWeatherData, "wednesday"))
+    console.log(newWeatherData)
     return (
         <div className={styles.root}>
             {/* Search bar */} 
@@ -150,16 +175,24 @@ const Weather = () => {
                             {
                             newWeatherData.monday.length ? (
                             <>
-                                {console.log(newWeatherData.monday)}
-                                {
-                                    <div>{newWeatherData.monday.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
-                                }
+                                {console.log("newWeatherData.monday", newWeatherData.monday)}
+                                <div>{newWeatherData.monday.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
+                                <div>{getMaxTemp(newWeatherData, 'monday')}</div>
+                                {/* { <div>{newWeatherData.monday.filter((el: any) =>  el.main.temp === Math.max(el.main.temp))}</div> } */}
                             </>
                             ) : null
                             }
                         </CardContent>
                     </Card>
                     <Card>
+                        <CardMedia
+                            className={`
+                            ${styles.container__card}
+                            ${styles.cardImg}
+                            `}
+                            component="img"
+                            src={`http://openweathermap.org/img/wn/${getIcon(newWeatherData, "tuesday")}@2x.png`}
+                        />
                         <CardContent
                             className={`
                             ${styles.container__card}
@@ -168,11 +201,14 @@ const Weather = () => {
                         >
                             <h2>Tuesday</h2>
                             {
-                            newWeatherData.monday.length ? (
+                            newWeatherData.tuesday.length ? (
                             <>
-                                <p>{console.log(newWeatherData.monday)} </p>
+                                {/* {console.log("newWeatherData.tuesday", newWeatherData.tuesday)} */}
                                 {
-                                    <div>{newWeatherData.monday.filter((h: any) => new Date(h.dt).getHours() === 18)[0].dt}</div>
+                                    <>
+                                    <div>{newWeatherData.tuesday.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
+                                    <div> temp: {getMaxTemp(newWeatherData, 'tuesday')} &deg;C</div>
+                                    </>
                                 }
                             </>
                             ) : null
