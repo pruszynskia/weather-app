@@ -30,8 +30,6 @@ const Weather = () => {
     const getWeatherData = async (city: any) => {
         const url = `${ API_BASE_URL}/data/2.5/forecast?q=${city}&cnt=40&appid=${API_KEY}&units=metric&mode=json`
         const data = await axios.get(url)
-        
-        //  console.log(url, "URL")
         return data
     }
 
@@ -42,7 +40,6 @@ const Weather = () => {
             setWeatherData(data);
             setLoading(false);
         } catch(error) {
-            // console.log(error.message, "ERROR");
             setLoading(false)
         }
     }
@@ -96,28 +93,24 @@ const Weather = () => {
     }
     // Max Temp
     function getMaxTemp(obj: any, day: string) {
-        console.log(obj[day].length)
         if(obj[day].length) {
             return Math.floor(Math.max(...obj[day].map((el: any) => el.main.temp_max)))
         } else {
             return 'not available'
-        }    }
-    // console.log("getMaxTemp", getMaxTemp([1,2,3]))
-    console.log("newWeatherData max temp", getMaxTemp(newWeatherData, 'monday'))
-    
+        }
+    }
+
     if (weatherData && loading2) {
-        // console.log(getByDay(weatherData.data.list), "GET BY DAY")
         let nWD = getByDay(weatherData.data.list)
         setNewWeatherData(nWD)
         setLoading2(false)
     }
-
+    
     function getIcon(obj: any, day: string) {
         if (obj[day].length) {
             if(obj[day].length >= 4) {
                 const icon = obj[day].filter((el: any) => {
                     const hour = new Date(el.dt * 1000).getHours()
-                    console.log(hour)
                     return hour === 11
                 })[0].weather[0].icon
                 return icon 
@@ -128,8 +121,11 @@ const Weather = () => {
             return "not available"
         }
     }
+
+    console.log("newWeatherData max temp", getMaxTemp(newWeatherData, 'monday'))
     console.log("getIcon",getIcon(newWeatherData, "wednesday"))
     console.log(newWeatherData)
+
     return (
         <div className={styles.root}>
             {/* Search bar */} 
@@ -175,14 +171,13 @@ const Weather = () => {
                             {
                             newWeatherData.monday.length ? (
                             <>
-                                {console.log("newWeatherData.monday", newWeatherData.monday)}
                                 <div>{newWeatherData.monday.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
                                 <div>{getMaxTemp(newWeatherData, 'monday')}</div>
                                 {/* { <div>{newWeatherData.monday.filter((el: any) =>  el.main.temp === Math.max(el.main.temp))}</div> } */}
                             </>
                             ) : null
                             }
-                        </CardContent>
+                        </CardContent> 
                     </Card>
                     <Card>
                         <CardMedia
@@ -203,7 +198,6 @@ const Weather = () => {
                             {
                             newWeatherData.tuesday.length ? (
                             <>
-                                {/* {console.log("newWeatherData.tuesday", newWeatherData.tuesday)} */}
                                 {
                                     <>
                                     <div>{newWeatherData.tuesday.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
