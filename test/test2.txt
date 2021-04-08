@@ -1,0 +1,109 @@
+
+ 
+     function getMaxTemp(obj: any, day: string) {
+        if(obj[day].length) {
+            return Math.floor(Math.max(...obj[day].map((el: any) => el.main.temp_max)))
+        } else {
+            return 'not available'
+        }
+    }
+ 
+    function getIcon(obj: any, day: string) {
+        if (obj[day].length) {
+            if(obj[day].length >= 4) {
+                const icon = obj[day].filter((el: any) => {
+                    const hour = new Date(el.dt * 1000).getHours()
+                    return hour === 11
+                })[0].weather[0].icon
+                return icon 
+            } else {
+                return obj[day][0].weather[0].icon
+            }
+        } else {
+            return "not available"
+        }
+    }
+
+{ days2.map((d: any, id: any) => 
+                    <div className={`
+                    ${styles.container}
+                    ${styles.row}
+                    `}
+                    key={id}
+                    >
+                        <Card>
+                            <CardMedia
+                                className={`
+                                ${styles.container__card}
+                                ${styles.cardImg}
+                                `}
+                                component="img"
+                                src={`http://openweathermap.org/img/wn/${getIcon(newWeatherData, d)}@2x.png`}
+                            />
+                            <CardContent
+                                className={`
+                                ${styles.container__card}
+                                ${styles.column}
+                                `}
+                            >
+                                <h2>{d}</h2>
+                                {
+                                newWeatherData.tuesday.length ? (
+                                <>
+                                    {
+                                        <>
+                                        <div>{newWeatherData.tuesday.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
+                                        <div> temp: {getMaxTemp(newWeatherData, 'tuesday')} &deg;C</div>
+                                        </>
+                                    }
+                                </>
+                                ) : null
+                                }   
+                            </CardContent>
+                        </Card>
+                    </div>
+                )}
+
+                {/* 3 Hour forecast */}
+                <div className={`
+                ${styles.container}
+                ${styles.row}
+                `}
+                > 
+                    {weatherData ? (
+                        weatherData.data.list.map((pos: any, id:any) =>
+                        <div key={id} className={`
+                            ${styles.container__card}
+                            ${styles.row}
+                            `}
+                        >
+                            <Card>
+                                <CardMedia
+                                    className={`
+                                    ${styles.container__card}
+                                    ${styles.cardImg}
+                                    `}
+                                    component="img"
+                                    src={`http://openweathermap.org/img/wn/${pos.weather[0].icon}@2x.png`}
+                                />
+                                <CardContent 
+                                    className={`
+                                    ${styles.container__card}
+                                    ${styles.column}
+                                    `}
+                                >
+                                    <h2>{pos.weather[0].main}</h2>
+                                    <p>{days[new Date(pos.dt*1000).getDay()]}</p>
+                                    <p>
+                                        {new Date(pos.dt*1000).getFullYear()}{' '}
+                                        {months[new Date(pos.dt*1000).getMonth()]}{' '}
+                                        {new Date(pos.dt*1000).getDay()}{' '}
+                                        {new Date(pos.dt*1000).getHours()}{':00'}
+                                    </p>
+                                    <p>Min: {Math.round(pos.main.temp_min)} &deg;C</p>
+                                    <p>Max: {Math.round(pos.main.temp_max)} &deg;C</p>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    )) : null
+                    }  
