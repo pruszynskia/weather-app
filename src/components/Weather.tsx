@@ -131,7 +131,7 @@ const Weather = () => {
             
             <div className={`
                 ${styles.container}
-                ${styles.column}
+                ${styles.row}
                 `}
             >
             {

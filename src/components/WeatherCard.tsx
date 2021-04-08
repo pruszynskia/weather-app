@@ -30,42 +30,43 @@ export default function(props: any) {
     }
 
     return (
-        <div className={`
-                    ${styles.container}
-                    ${styles.row}
+        <div 
+            className={`
+            ${styles.container}
+            ${styles.column}
+            `}
+        >
+            <Card>
+                <CardMedia
+                    className={`
+                    ${styles.container__card}
+                    ${styles.cardImg}
                     `}
-                    >
-                        <Card>
-                            <CardMedia
-                                className={`
-                                ${styles.container__card}
-                                ${styles.cardImg}
-                                `}
-                                component="img"
-                                src={`http://openweathermap.org/img/wn/${getIcon(props.data)}@2x.png`}
-                            />
-                            <CardContent
-                                className={`
-                                ${styles.container__card}
-                                ${styles.column}
-                                `}
-                            >
-                                <h2>{props.day}</h2>
-                                {
-                                props.data.length ? (
-                                <>
-                                    {
-                                        <>
-                                        <div>{props.data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
-                                        <div> temp: {getMaxTemp(props.data)} &deg;C</div>
-                                        </>
-                                    }
-                                </>
-                                ) : null
-                                }   
-                            </CardContent>
-                        </Card>
-                    </div>
+                    component="img"
+                    src={`http://openweathermap.org/img/wn/${getIcon(props.data)}@2x.png`}
+                />
+                <CardContent
+                    className={`
+                    ${styles.container__card}
+                    ${styles.column}
+                    `}
+                >
+                    <h2>{props.day}</h2>
+                    {
+                    props.data.length ? (
+                    <>
+                        {
+                            <>
+                            <div>{props.data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
+                            <div> temp: {getMaxTemp(props.data)} &deg;C</div>
+                            </>
+                        }
+                    </>
+                    ) : null
+                    }   
+                </CardContent>
+            </Card>
+        </div>
     )
 }
 
