@@ -9,7 +9,8 @@ import {
     TextField
 } from '@material-ui/core';
 import { API_KEY , API_BASE_URL } from '../apis/apisConfig';
-import WeatherCard from './WeatherCard'
+import WeatherCard from './WeatherCard';
+import WeatherCardDetails from './WeatherCardDetails';
 
 const Weather = () => {
     const styles = weatherStyles();
@@ -128,18 +129,26 @@ const Weather = () => {
             </form>
 
             {/* Daily forecast */}
-            
             <div className={`
-                ${styles.container}
-                ${styles.row}
-                `}
+                    ${styles.container}
+                    ${styles.column}
+                    `}
             >
-            {
-                Object.entries(newWeatherData).map((el: any) => {
-                    return <WeatherCard data={el[1]} day={el[0]} />
-                })
-            }
+                <div className={`
+                    ${styles.container}
+                    ${styles.row}
+                    `}
+                >
+                    {
+                        Object.entries(newWeatherData).map((el: any) => {
+                            return <WeatherCard data={el[1]} day={el[0]} />
+                        })
+                    }
+                    {
+                        <WeatherCardDetails />
+                    }
                 </div>
+            </div>
         </div>
     )
 };

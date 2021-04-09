@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Card, CardMedia, CardContent} from '@material-ui/core'
 import {weatherStyles } from '../styles/common'
 
-export default function(props: any) {
+const WeatherCard = (props: any) => {
     const styles = weatherStyles();
 
     function getMaxTemp(arr: any) {
@@ -70,3 +70,4 @@ export default function(props: any) {
     )
 }
 
+export default WeatherCard;
