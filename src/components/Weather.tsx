@@ -115,17 +115,12 @@ const Weather = () => {
                 onSubmit={getData}
             >
                 <TextField
+                    
                     label="Search"
-                    variant="outlined"
+                    variant="standard"
                     onChange={(e) => setCity(e.target.value)}
                     value={city}
                 />
-                <Button
-                    type="submit"
-                    variant="contained"
-                >
-                    Search
-                </Button>
             </form>
 
             {/* Daily forecast */}

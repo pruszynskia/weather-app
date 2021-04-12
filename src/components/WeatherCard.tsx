@@ -36,7 +36,11 @@ const WeatherCard = (props: any) => {
             ${styles.column}
             `}
         >
-            <Card>
+            <Card
+                className={`
+                ${styles.glassMorphism}
+                `}
+            >
                 <CardMedia
                     className={`
                     ${styles.container__card}
