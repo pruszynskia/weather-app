@@ -5,7 +5,7 @@ export const weatherStyles = makeStyles(() => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        background: "linear-gradient(0deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%)",
+        background: "linear-gradient(0deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%)"
     },
     container: {
         display: "flex",
@@ -14,6 +14,7 @@ export const weatherStyles = makeStyles(() => ({
         margin: "20px",
     },
     container__card: {
+        color: "white",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",

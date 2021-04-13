@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
-import {Card, CardMedia, CardContent} from '@material-ui/core'
+import {Card, CardMedia, CardContent, TableRow} from '@material-ui/core'
 import {weatherStyles } from '../styles/common'
+import { getDefaultNormalizer } from '@testing-library/dom';
 
 const WeatherCard = (props: any) => {
     const styles = weatherStyles();
@@ -29,6 +30,12 @@ const WeatherCard = (props: any) => {
         }
     }
 
+    // function getWeatherName(arr: any) {
+    //     if(arr.length)
+        
+    // }
+    
+    
     return (
         <div 
             className={`
@@ -62,9 +69,10 @@ const WeatherCard = (props: any) => {
                         {
                             <>
                             <div>{props.data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
-                            <div> temp: {getMaxTemp(props.data)} &deg;C</div>
+                            <div> TEMP : {getMaxTemp(props.data)} &deg;C</div>
                             </>
                         }
+                        
                     </>
                     ) : null
                     }   

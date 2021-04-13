@@ -100,10 +100,6 @@ const Weather = () => {
         setNewWeatherData(nWD)
         setLoading2(false)
     }
-    
-
-
-    console.log("newWeatherData", newWeatherData)
 
     return (
         <div className={styles.root}>
