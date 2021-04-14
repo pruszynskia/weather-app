@@ -1,7 +1,5 @@
-import React, {useState} from 'react'
-import {Card, CardMedia, CardContent, TableRow} from '@material-ui/core'
-import {weatherStyles } from '../styles/common'
-import { getDefaultNormalizer } from '@testing-library/dom';
+import { Card, CardMedia, CardContent } from '@material-ui/core'
+import { weatherStyles } from '../styles/common'
 
 const WeatherCard = (props: any) => {
     const styles = weatherStyles();
@@ -29,11 +27,24 @@ const WeatherCard = (props: any) => {
             return "not available"
         }
     }
+    
+    function getWeatherName(arr: any) {
+        if (arr.length) {
+            if(arr.length >= 4) {
+                const weatherName = arr.filter((el: any) => {
+                    const hour = new Date(el.dt * 1000).getHours()
+                    return hour === 11
+                })[0].weather[0].main
+                return weatherName 
+            } else {
+                return arr[0].weather[0].main
+            }
+        } else {
+            return "not available"
+        }
+    }
 
-    // function getWeatherName(arr: any) {
-    //     if(arr.length)
-        
-    // }
+    
     
     
     return (
@@ -67,10 +78,11 @@ const WeatherCard = (props: any) => {
                     props.data.length ? (
                     <>
                         {
-                            <>
-                            <div>{props.data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
-                            <div> TEMP : {getMaxTemp(props.data)} &deg;C</div>
-                            </>
+                            <div>
+                                <div>{props.data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
+                                <div>{getWeatherName(props.data).toUpperCase()}</div>
+                                <div> TEMP : {getMaxTemp(props.data)} &deg;C</div>
+                            </div>
                         }
                         
                     </>

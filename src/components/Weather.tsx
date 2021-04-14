@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { weatherStyles } from '../styles/common';
 import {
-    Button,
-    Card,
-    CardContent,
-    CardMedia,
     TextField
 } from '@material-ui/core';
 import { API_KEY , API_BASE_URL } from '../apis/apisConfig';
@@ -101,6 +97,7 @@ const Weather = () => {
         setLoading2(false)
     }
 
+    console.log("newWeatherData", newWeatherData)
     return (
         <div className={styles.root}>
             {/* Search bar */} 
@@ -135,8 +132,10 @@ const Weather = () => {
                             return <WeatherCard data={el[1]} day={el[0]} />
                         })
                     }
-                    {
-                        <WeatherCardDetails />
+                    {newWeatherData.monday ?
+                        <WeatherCardDetails {...newWeatherData.monday}/>
+                        : 
+                        <div />
                     }
                 </div>
             </div>
