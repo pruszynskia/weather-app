@@ -5,19 +5,14 @@ import { Card, CardMedia, CardContent } from "@material-ui/core";
 const WeatherCardDetails = (props: any) => {
     const styles = weatherStyles();
 
-    console.log(props)
+    console.log("props", props)
     return (
         <div className={`
             ${styles.container}
             ${styles.row}
             `}
         > 
-            <Card>
-                <CardMedia />
-                <CardContent>
-                    
-                </CardContent>
-            </Card>
+         bla
         </div>
     )
 };

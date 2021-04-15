@@ -53,6 +53,7 @@ const WeatherCard = (props: any) => {
             ${styles.container}
             ${styles.column}
             `}
+            onClick={props.onClick}
         >
             <Card
                 className={`

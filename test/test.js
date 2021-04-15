@@ -7,6 +7,7 @@ const newWeatherData = {
 
 // for(let el of Object.entries(newWeatherData))
 
-Object.entries(newWeatherData).map((el) => {
-    console.log(el[0], el[1])
-})
+console.log(Object.entries(newWeatherData).sort((a, b) => {
+    if(a[1][1] - b[1][2] < 0) return -1
+    else return 1
+}))

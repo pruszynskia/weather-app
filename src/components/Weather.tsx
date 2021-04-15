@@ -13,6 +13,7 @@ const Weather = () => {
 
     const [city, setCity] = useState('')
     const [weatherData, setWeatherData] = useState<any | null>(null);
+
     const [newWeatherData, setNewWeatherData] = useState<any | null>({
         sunday: [],
         monday: [],
@@ -28,7 +29,8 @@ const Weather = () => {
     const getWeatherData = async (city: any) => {
         const url = `${ API_BASE_URL}/data/2.5/forecast?q=${city}&cnt=40&appid=${API_KEY}&units=metric&mode=json`
         const data = await axios.get(url)
-        return data
+        data.data.list.forEach((el: any, id: any) => el.id = id)
+        return data.data
     }
 
     const getData = async (e: any) => {
@@ -72,18 +74,13 @@ const Weather = () => {
     // Separate days
     function getByDay(arr: any) {
         let newDates: any = {
-            sunday: [],
-            monday: [],
-            tuesday: [],
-            wednesday: [],
-            thursday: [],
-            friday: [],
-            saturday: []
+            
         }
         
         for(var i of arr) {
             let d = new Date(i.dt*1000);
             let day: any = days[d.getDay()].toLowerCase();
+            if(!newDates[day]) newDates[day] = []
             newDates[day].push(i);
         }
         return newDates
@@ -92,12 +89,14 @@ const Weather = () => {
 
 
     if (weatherData && loading2) {
-        let nWD = getByDay(weatherData.data.list)
+        let nWD = getByDay(weatherData.list)
+
+        console.log("nwd", nWD)
         setNewWeatherData(nWD)
         setLoading2(false)
     }
 
-    console.log("newWeatherData", newWeatherData)
+    console.log("weatherData", weatherData)
     return (
         <div className={styles.root}>
             {/* Search bar */} 
@@ -128,12 +127,12 @@ const Weather = () => {
                     `}
                 >
                     {
-                        Object.entries(newWeatherData).map((el: any) => {
-                            return <WeatherCard data={el[1]} day={el[0]} />
-                        })
+                        Object.entries(newWeatherData).map((el: any, id: number) => {
+                            return <WeatherCard key={id} data={el[1]} day={el[0]}  onClick={() => console.log(el[0])}/>
+                        }) 
                     }
                     {newWeatherData.monday ?
-                        <WeatherCardDetails {...newWeatherData.monday}/>
+                        <WeatherCardDetails {...newWeatherData.monday} />
                         : 
                         <div />
                     }
