@@ -18,7 +18,7 @@ const WeatherCard = (props: any) => {
                 const icon = arr.filter((el: any) => {
                     const hour = new Date(el.dt * 1000).getHours()
                     return hour === 11
-                })[0].weather[0].icon
+                })[0].weather[0].icon;
                 return icon 
             } else {
                 return arr[0].weather[0].icon
@@ -27,7 +27,6 @@ const WeatherCard = (props: any) => {
             return "not available"
         }
     }
-    
     function getWeatherName(arr: any) {
         if (arr.length) {
             if(arr.length >= 4) {
@@ -44,6 +43,10 @@ const WeatherCard = (props: any) => {
         }
     }
 
+    const handleClick = () => {
+
+    }
+
     
     
     
@@ -53,44 +56,45 @@ const WeatherCard = (props: any) => {
             ${styles.container}
             ${styles.column}
             `}
-            onClick={props.onClick}
         >
-            <Card
-                className={`
-                ${styles.glassMorphism}
-                `}
-            >
-                <CardMedia
+            {
+            props.data.length ? (
+                <Card
                     className={`
-                    ${styles.container__card}
-                    ${styles.cardImg}
+                    ${styles.glassMorphism}
                     `}
-                    component="img"
-                    src={`http://openweathermap.org/img/wn/${getIcon(props.data)}@2x.png`}
-                />
-                <CardContent
-                    className={`
-                    ${styles.container__card}
-                    ${styles.column}
-                    `}
+                    onClick={handleClick}
                 >
-                    <h2>{props.day}</h2>
-                    {
-                    props.data.length ? (
-                    <>
-                        {
-                            <div>
-                                <div>{props.data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
-                                <div>{getWeatherName(props.data).toUpperCase()}</div>
-                                <div> TEMP : {getMaxTemp(props.data)} &deg;C</div>
-                            </div>
-                        }
-                        
-                    </>
-                    ) : null
-                    }   
-                </CardContent>
-            </Card>
+                    <CardMedia
+                        className={`
+                        ${styles.container__card}
+                        ${styles.cardImg}
+                        `}
+                        component="img"
+                        src={`http://openweathermap.org/img/wn/${getIcon(props.data)}@2x.png`}
+                        />
+                    <CardContent
+                        className={`
+                        ${styles.container__card}
+                        ${styles.column}
+                        `}
+                        >
+                        <h2>{props.day.toUpperCase()}</h2>
+                
+                        <>
+                            {
+                                <div>
+                                    <div><h1>{getMaxTemp(props.data)} &deg;C</h1></div>
+                                    <div>{props.data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
+                                    <div>{getWeatherName(props.data).toUpperCase()}</div>
+                                </div>
+                            }
+                            
+                        </>
+                    </CardContent>
+                </Card>
+            ) : null
+            }   
         </div>
     )
 }
