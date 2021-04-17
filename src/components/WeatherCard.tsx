@@ -11,15 +11,17 @@ const WeatherCard = (props: any) => {
             return 'not available'
         }
     }
-
+    // console.log(props.data)
     function getIcon(arr: any) {
+        // console.log("props day", props.day)
         if (arr.length) {
-            if(arr.length >= 4) {
+            if(arr.length >= 5) {
                 const icon = arr.filter((el: any) => {
                     const hour = new Date(el.dt * 1000).getHours()
                     return hour === 11
-                })[0].weather[0].icon;
-                return icon 
+                });
+                // console.log("icon", icon[0])
+                return icon[0].weather[0].icon 
             } else {
                 return arr[0].weather[0].icon
             }
@@ -27,9 +29,15 @@ const WeatherCard = (props: any) => {
             return "not available"
         }
     }
+
+
+    function getDateString(data: any) {
+        return new Date(data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt * 1000).toLocaleDateString()
+    }
+
     function getWeatherName(arr: any) {
         if (arr.length) {
-            if(arr.length >= 4) {
+            if(arr.length >= 5) {
                 const weatherName = arr.filter((el: any) => {
                     const hour = new Date(el.dt * 1000).getHours()
                     return hour === 11
@@ -47,7 +55,6 @@ const WeatherCard = (props: any) => {
 
     }
 
-    
     
     
     return (
@@ -85,7 +92,9 @@ const WeatherCard = (props: any) => {
                             {
                                 <div>
                                     <div><h1>{getMaxTemp(props.data)} &deg;C</h1></div>
-                                    <div>{props.data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt}</div>
+                                    <div>{
+                                        getDateString(props.data)
+                                    }</div>
                                     <div>{getWeatherName(props.data).toUpperCase()}</div>
                                 </div>
                             }

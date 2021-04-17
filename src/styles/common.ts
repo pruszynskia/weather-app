@@ -5,7 +5,8 @@ export const weatherStyles = makeStyles(() => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        background: "linear-gradient(0deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%)"
+        background: "linear-gradient(0deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%)",
+        height: "100vh"
     },
     container: {
         display: "flex",

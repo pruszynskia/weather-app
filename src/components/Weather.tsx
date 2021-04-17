@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from '@material-ui/core/Button'
 import { weatherStyles } from '../styles/common';
 import {
     TextField
@@ -14,15 +15,7 @@ const Weather = () => {
     const [city, setCity] = useState('')
     const [weatherData, setWeatherData] = useState<any | null>(null);
 
-    const [newWeatherData, setNewWeatherData] = useState<any | null>({
-        sunday: [],
-        monday: [],
-        tuesday: [],
-        wednesday: [],
-        thursday: [],
-        friday: [],
-        saturday: []
-    })
+    const [newWeatherData, setNewWeatherData] = useState<any | null>(null)
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true)
 
@@ -35,31 +28,18 @@ const Weather = () => {
 
     const getData = async (e: any) => {
         e.preventDefault()
-        try{
-            const data = await getWeatherData(city);
-            setWeatherData(data);
-            setLoading(false);
-        } catch(error) {
-            setLoading(false)
-        }
+
+            try{
+                const data = await getWeatherData(city);
+                // console.log("data", data)
+                setWeatherData(data);
+                setLoading(false);
+            } catch(error) {
+                setLoading(false)
+            }
+        
     }
 
-    
-    // Date
-        const months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ];
     
         const days = [
             "Sunday",
@@ -96,7 +76,7 @@ const Weather = () => {
         setLoading2(false)
     }
 
-    console.log("weatherData", weatherData)
+    // console.log("weatherData", weatherData)
     return (
         <div className={styles.root}>
             {/* Search bar */} 
@@ -104,18 +84,27 @@ const Weather = () => {
                 ${styles.container}
                 ${styles.row}
                 `}
-                onSubmit={getData}
+                onSubmit={async (e: any) => {
+                    await getData(e);
+                    setLoading2(true);
+                }}
             >
                 <TextField
                     
                     label="Search"
                     variant="standard"
-                    onChange={(e) => setCity(e.target.value)}
+                    onChange={(e) => {
+                        
+                        setCity(e.target.value);
+                    }}
                     value={city}
                 />
+                <Button variant="contained" type="submit">Search</Button>
             </form>
 
             {/* Daily forecast */}
+            {newWeatherData ? 
+            
             <div className={`
                     ${styles.container}
                     ${styles.column}
@@ -133,11 +122,12 @@ const Weather = () => {
                     }
                     {newWeatherData.monday ?
                         <WeatherCardDetails {...newWeatherData.monday} />
-                        : 
+                        :  
                         <div />
                     }
                 </div>
             </div>
+            : <div />}
         </div>
     )
 };
