@@ -19,6 +19,8 @@ const Weather = () => {
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true)
 
+    const [selectedDay, setSelectedDay] = useState(null);
+
     const getWeatherData = async (city: any) => {
         const url = `${ API_BASE_URL}/data/2.5/forecast?q=${city}&cnt=40&appid=${API_KEY}&units=metric&mode=json`
         const data = await axios.get(url)
@@ -31,7 +33,6 @@ const Weather = () => {
 
             try{
                 const data = await getWeatherData(city);
-                // console.log("data", data)
                 setWeatherData(data);
                 setLoading(false);
             } catch(error) {
@@ -40,7 +41,6 @@ const Weather = () => {
         
     }
 
-    
         const days = [
             "Sunday",
             "Monday",
@@ -77,6 +77,7 @@ const Weather = () => {
     }
 
     // console.log("weatherData", weatherData)
+    console.log(selectedDay)
     return (
         <div className={styles.root}>
             {/* Search bar */} 
@@ -116,15 +117,16 @@ const Weather = () => {
                     `}
                 >
                     {
+                        selectedDay ? <WeatherCardDetails /> :
                         Object.entries(newWeatherData).map((el: any, id: number) => {
-                            return <WeatherCard key={id} data={el[1]} day={el[0]}  onClick={() => console.log(el[0])}/>
+                            return <WeatherCard key={id} data={el[1]} day={el[0]}  onClick={(c: any) => setSelectedDay(el[0])}/>
                         }) 
                     }
-                    {newWeatherData.monday ?
+                    {/* {newWeatherData.monday ?
                         <WeatherCardDetails {...newWeatherData.monday} />
                         :  
                         <div />
-                    }
+                    } */}
                 </div>
             </div>
             : <div />}

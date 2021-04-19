@@ -11,16 +11,13 @@ const WeatherCard = (props: any) => {
             return 'not available'
         }
     }
-    // console.log(props.data)
     function getIcon(arr: any) {
-        // console.log("props day", props.day)
         if (arr.length) {
             if(arr.length >= 5) {
                 const icon = arr.filter((el: any) => {
                     const hour = new Date(el.dt * 1000).getHours()
                     return hour === 11
                 });
-                // console.log("icon", icon[0])
                 return icon[0].weather[0].icon 
             } else {
                 return arr[0].weather[0].icon
