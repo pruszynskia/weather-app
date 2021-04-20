@@ -122,11 +122,11 @@ const Weather = () => {
                             return <WeatherCard key={id} data={el[1]} day={el[0]}  onClick={(c: any) => setSelectedDay(el[0])}/>
                         }) 
                     }
-                    {/* {newWeatherData.monday ?
+                    {newWeatherData.monday ?
                         <WeatherCardDetails {...newWeatherData.monday} />
                         :  
                         <div />
-                    } */}
+                    }
                 </div>
             </div>
             : <div />}
