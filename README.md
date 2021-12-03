@@ -37,4 +37,4 @@ You will also see any lint errors in the console.
 ## Contact
 Created by Andrzej Pruszynski <br />
 
-<a href="mailto:andrzej.pruszynski90@gmail.com">andrzej.pruszynski90@gmail.com</a> - feel free to contact me!
+andrzej.pruszynski90@gmail.com - feel free to contact me!
