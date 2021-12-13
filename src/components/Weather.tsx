@@ -16,8 +16,8 @@ const Weather = () => {
     const [weatherData, setWeatherData] = useState<any | null>(null);
 
     const [newWeatherData, setNewWeatherData] = useState<any | null>(null)
-    const [loading, setLoading] = useState(true);
-    const [loading2, setLoading2] = useState(true)
+    const [loading, setLoading] = useState<boolean>(true);
+    const [loading2, setLoading2] = useState<boolean>(true)
 
     const [selectedDay, setSelectedDay] = useState(null);
 

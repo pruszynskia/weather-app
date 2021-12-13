@@ -14,13 +14,13 @@ const WeatherCard = (props: any) => {
     function getIcon(arr: any) {
         if (arr.length) {
             if(arr.length >= 5) {
-                const icon = arr.filter((el: any) => {
-                    const hour = new Date(el.dt * 1000).getHours()
+                const icon = arr.find((el: any) => {
+                    const hour = new Date(el?.dt * 1000).getHours()
                     return hour === 11
                 });
-                return icon[0].weather[0].icon 
+                return icon.weather?.icon || ""
             } else {
-                return arr[0].weather[0].icon
+                return arr[0].weather?.[0]?.icon || ""
             }
         } else {
             return "not available"
@@ -29,14 +29,14 @@ const WeatherCard = (props: any) => {
 
 
     function getDateString(data: any) {
-        return new Date(data.filter((el: any) => new Date(el.dt).getHours() === 18)[0].dt * 1000).toLocaleDateString()
+        return new Date(data.filter((el: any) => new Date(el?.dt).getHours() === 18)[0]?.dt * 1000).toLocaleDateString()
     }
 
     function getWeatherName(arr: any) {
         if (arr.length) {
             if(arr.length >= 5) {
                 const weatherName = arr.filter((el: any) => {
-                    const hour = new Date(el.dt * 1000).getHours()
+                    const hour = new Date(el?.dt * 1000).getHours()
                     return hour === 11
                 })[0].weather[0].main
                 return weatherName 
