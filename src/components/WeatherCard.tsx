@@ -1,24 +1,31 @@
 import { Card, CardMedia, CardContent } from '@material-ui/core'
 import { weatherStyles } from '../styles/common'
+import { IWeatherData, } from '../lib/types';
 
-const WeatherCard = (props: any) => {
+interface WeatherCardProps {
+    data: IWeatherData[],
+    day: string
+    onClick: () => void
+}
+
+const WeatherCard = (props: WeatherCardProps) => {
     const styles = weatherStyles();
 
-    function getMaxTemp(arr: any) {
-        if(arr.length) {
-            return Math.floor(Math.max(...arr.map((el: any) => el.main.temp_max)))
+    function getMaxTemp(arr: IWeatherData[]) {
+        if(arr.length > 0) {
+            return Math.floor(Math.max(...arr.map((el: IWeatherData) => el.main?.temp_max || 0)))
         } else {
             return 'not available'
         }
     }
-    function getIcon(arr: any) {
+    function getIcon(arr: IWeatherData[]) {
         if (arr.length) {
             if(arr.length >= 5) {
-                const icon = arr.find((el: any) => {
+                const icon = arr.find((el: IWeatherData) => {
                     const hour = new Date(el?.dt * 1000).getHours()
                     return hour === 11
                 });
-                return icon.weather?.icon || ""
+                return icon?.weather[0].icon || ""
             } else {
                 return arr[0].weather?.[0]?.icon || ""
             }
@@ -28,18 +35,18 @@ const WeatherCard = (props: any) => {
     }
 
 
-    function getDateString(data: any) {
-        return new Date(data.filter((el: any) => new Date(el?.dt).getHours() === 18)[0]?.dt * 1000).toLocaleDateString()
+    function getDateString(data: IWeatherData[]) {
+        return new Date(data.find((el: IWeatherData) => new Date(el?.dt || Date.now())?.getHours() === 18)?.dt || Date.now() )?.toLocaleDateString()
     }
 
-    function getWeatherName(arr: any) {
+    function getWeatherName(arr: IWeatherData[]) {
         if (arr.length) {
             if(arr.length >= 5) {
-                const weatherName = arr.filter((el: any) => {
+                const weatherName = arr.find((el: IWeatherData) => {
                     const hour = new Date(el?.dt * 1000).getHours()
                     return hour === 11
-                })[0].weather[0].main
-                return weatherName 
+                })?.weather[0].main
+                return weatherName || ""
             } else {
                 return arr[0].weather[0].main
             }

@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { weatherStyles } from '../styles/common';
 import { Card, CardMedia, CardContent } from "@material-ui/core";
+import { IWeatherData } from '../lib/types';
 
-const WeatherCardDetails = (props: any) => {
+interface CardProps {
+    weather?: IWeatherData
+}
+
+const WeatherCardDetails = (props: CardProps) => {
     const styles = weatherStyles();
     console.log("props", props)
     return (
@@ -19,9 +24,9 @@ const WeatherCardDetails = (props: any) => {
                 `}
             > 
                 <CardContent>
-                    <p>{props[0].dt}</p>
-                    <p>{Math.floor(props[0].main.temp_max)} &deg;C</p>
-                    <p>{props[0].weather[0].description}</p>
+                    <p>{props.weather?.dt}</p>
+                    <p>{Math.floor(props.weather?.main?.temp_max || 0) || 0} &deg;C</p>
+                    <p>{props.weather?.weather?.[0]?.description || ''}</p>
                 </CardContent>
             </Card>
         </div>
