@@ -19,7 +19,7 @@ const WeatherCard = (props: WeatherCardProps) => {
         }
     }
     function getIcon(arr: IWeatherData[]) {
-        if (arr.length) {
+        if (arr.length > 0) {
             if(arr.length >= 5) {
                 const icon = arr.find((el: IWeatherData) => {
                     const hour = new Date(el?.dt * 1000).getHours()
@@ -27,7 +27,7 @@ const WeatherCard = (props: WeatherCardProps) => {
                 });
                 return icon?.weather[0].icon || ""
             } else {
-                return arr[0].weather?.[0]?.icon || ""
+                return arr[0].weather?.[0].icon
             }
         } else {
             return "not available"
@@ -58,9 +58,8 @@ const WeatherCard = (props: WeatherCardProps) => {
     const handleClick = () => {
 
     }
-
     
-    
+    console.log("props", props.data)
     return (
         <div 
             className={`

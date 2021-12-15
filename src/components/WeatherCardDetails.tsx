@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { weatherStyles } from '../styles/common';
-import { Card, CardMedia, CardContent } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import { IWeatherData } from '../lib/types';
 
 interface CardProps {
