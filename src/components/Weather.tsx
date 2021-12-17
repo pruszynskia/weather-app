@@ -87,8 +87,6 @@ const Weather = () => {
 
     if (weatherData && loading2) {
         let nWD = getByDay(weatherData)
-
-        console.log("nwd", nWD)
         setNewWeatherData(nWD)
         setLoading2(false)
     }
@@ -96,9 +94,6 @@ const Weather = () => {
     if(loading) {
         return <div>Loading...</div>
     }
-    
-    
-    console.log("newWeatherData", newWeatherData)
 
     return (
         <div className={styles.root}>
@@ -141,7 +136,6 @@ const Weather = () => {
                     {
                         selectedDay ? <WeatherCardDetails weather={newWeatherData[selectedDay || ''][0]} /> :
                         Object.entries(newWeatherData).map((el: any,  id: number) => {
-                            console.log(el[1])
                             return <WeatherCard key={id} data={el[1]} day={el[0]}  onClick={() => setSelectedDay(el[0])}/>
                         }) 
                     }

@@ -9,7 +9,6 @@ interface CardProps {
 
 const WeatherCardDetails = (props: CardProps) => {
     const styles = weatherStyles();
-    console.log("props", props)
     return (
         <div className={`
             ${styles.container}
