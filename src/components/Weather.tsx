@@ -139,11 +139,6 @@ const Weather = () => {
                             return <WeatherCard key={id} data={el[1]} day={el[0]}  onClick={() => setSelectedDay(el[0])}/>
                         }) 
                     }
-                    {newWeatherData.monday ?
-                        <WeatherCardDetails weather={newWeatherData.monday} />
-                        :  
-                        <div />
-                    }
                 </div>
             </div>
             : <div />}
